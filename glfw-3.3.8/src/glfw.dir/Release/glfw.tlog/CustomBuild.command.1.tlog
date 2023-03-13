@@ -1,0 +1,10 @@
+^D:\CPPWORKSPACE\OPENGL_LEARN\GLFW-3.3.8\SRC\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/cppworkspace/opengl_learn/glfw-3.3.8 -BD:/cppworkspace/opengl_learn/glfw-3.3.8 --check-stamp-file D:/cppworkspace/opengl_learn/glfw-3.3.8/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
