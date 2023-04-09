@@ -7,6 +7,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "IndexBuffer.h"
+#include "VertexBuffer.h"
 
 using namespace std;
 
@@ -95,8 +97,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 }
 
 
-
-int main0408(void)
+int mainib(void)
 {
     GLFWwindow* window;
 
@@ -131,24 +132,42 @@ int main0408(void)
 
     }
 
-    cout << "opengl version:"<<glGetString(GL_VERSION) << endl;
+    cout << "opengl version:" << glGetString(GL_VERSION) << endl;
 
-    float positions[6] = {
-        -0.5f, -0.5f,
-        0.0f, 0.5f,
-        0.5f, -0.5f
+    float positions[] = {
+        -0.5f, -0.5f, //0
+        0.5f, -0.5f,  //1
+        0.5f, 0.5f,  //2
+        -0.5f, 0.5f, //3
     };
 
-    unsigned int buffer_id;
-    glGenBuffers(1,&buffer_id);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_id); //select buffer
-    glBufferData(GL_ARRAY_BUFFER,6*sizeof(float), positions,GL_STATIC_DRAW);
+    //use indices is to remove duplicate vertices
+    unsigned int indices[] = {
+        0,1,2,
+        2,3,0
+    };
+
+    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+    //unsigned int buffer_id;
+    //glGenBuffers(1, &buffer_id);
+    //glBindBuffer(GL_ARRAY_BUFFER, buffer_id); //select buffer
+    //glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0,2, GL_FLOAT, GL_FALSE,sizeof(float)*2,0);//index: example I have three kind of attributes  position texture coordinate and normal.  position is index 0 texture coordinate index 1 normal index 2
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);//index: example I have three kind of attributes  position texture coordinate and normal.  position is index 0 texture coordinate index 1 normal index 2
     //size 2dimension is 2 3dimension is 3
     //stride how much you need to go forward to get second vertex if position is 3dimension 12 byte texture coordinate is 2dimension 8 byte normal is 3dimension 12 byte    0,12,20
     //pointer offset of next attribute
+
+
+
+    IndexBuffer ib(indices, 6);
+    //unsigned int ibo;
+    //glGenBuffers(1, &ibo);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo); //select buffer
+    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+
 
     ShaderProgramSources source = ParseShader("res/shaders/Basic.shader");
     unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
@@ -160,8 +179,9 @@ int main0408(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        
+        //glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

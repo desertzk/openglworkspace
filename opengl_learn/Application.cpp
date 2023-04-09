@@ -7,6 +7,11 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include "IndexBuffer.h"
+#include "VertexBuffer.h"
+#include "VertexArray.h"
+#include"VertexBufferLayout.h"
+#include "Texture.h"
 
 using namespace std;
 
@@ -95,8 +100,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 }
 
 
-
-int main0408(void)
+int main(void)
 {
     GLFWwindow* window;
 
@@ -104,10 +108,13 @@ int main0408(void)
     if (!glfwInit())
         return -1;
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(940, 680, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -122,6 +129,7 @@ int main0408(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
+    glfwSwapInterval(1);
 
     GLenum err = glewInit();
     if (GLEW_OK != err)
@@ -131,37 +139,82 @@ int main0408(void)
 
     }
 
-    cout << "opengl version:"<<glGetString(GL_VERSION) << endl;
+    cout << "opengl version:" << glGetString(GL_VERSION) << endl;
 
-    float positions[6] = {
-        -0.5f, -0.5f,
-        0.0f, 0.5f,
-        0.5f, -0.5f
+    float positions[] = {
+        -1.2f, -1.2f, 0.0f, 0.0f, //0 bottom left
+        1.2f, -1.2f,1.0f,0.0f,  //1 bottom right
+        1.0f, 1.0f, 1.0f,1.0f, //2 top right
+        -1.2f, 1.2f,0.0f,1.0f //3
     };
 
-    unsigned int buffer_id;
-    glGenBuffers(1,&buffer_id);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer_id); //select buffer
-    glBufferData(GL_ARRAY_BUFFER,6*sizeof(float), positions,GL_STATIC_DRAW);
+    //use indices is to remove duplicate vertices
+    unsigned int indices[] = {
+        0,1,2,
+        2,3,0
+    };
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0,2, GL_FLOAT, GL_FALSE,sizeof(float)*2,0);//index: example I have three kind of attributes  position texture coordinate and normal.  position is index 0 texture coordinate index 1 normal index 2
-    //size 2dimension is 2 3dimension is 3
-    //stride how much you need to go forward to get second vertex if position is 3dimension 12 byte texture coordinate is 2dimension 8 byte normal is 3dimension 12 byte    0,12,20
-    //pointer offset of next attribute
+    GLCall(glEnable(GL_BLEND));
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    ShaderProgramSources source = ParseShader("res/shaders/Basic.shader");
-    unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
-    glUseProgram(shader);
+    VertexArray va;
+    VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+    VertexBufferLayout layout;
+    layout.Push<float>(2);
+    layout.Push<float>(2);
+    va.AddBuffer(vb,layout);
+
+
+    IndexBuffer ib(indices, 6);
+    //unsigned int ibo;
+    //glGenBuffers(1, &ibo);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo); //select buffer
+    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+
+    Shader shader("res/shaders/Basic.shader");
+    shader.Bind();
+    //shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+    //ShaderProgramSources source = ParseShader("res/shaders/Basic.shader");
+    //unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
+    //glUseProgram(shader);
+
+    Texture texture("res/textures/82783102_p0.png");
+    texture.Bind();
+    shader.SetUniform1i("u_Texture",0);
+
+
+    Renderer renderer;
+
+    float r = 0.0f;
+    float increment = 0.05f;
+
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+        renderer.Clear();
+        //glClear(GL_COLOR_BUFFER_BIT);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        
+
+        //va.Bind();
+        //ib.Bind();
+
+
+        renderer.Draw(va, ib, shader);
+        //glDrawArrays(GL_TRIANGLES, 0, 3);
+        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
+        if (r > 1)
+        {
+            increment = -0.05f;
+        }
+        else if (r < 0) {
+            increment = 0.05f;
+        }
+
+        r += increment;
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
@@ -170,7 +223,7 @@ int main0408(void)
         glfwPollEvents();
     }
 
-    glDeleteProgram(shader);
+    //glDeleteProgram(shader);
 
     glfwTerminate();
     return 0;
