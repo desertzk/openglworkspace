@@ -13,91 +13,16 @@
 #include"VertexBufferLayout.h"
 #include "Texture.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
+
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
+
 using namespace std;
 
-struct ShaderProgramSources
-{
-    std::string VertexSource;
-    std::string FragmentSource;
-};
-
-static ShaderProgramSources ParseShader(const std::string& filepath)
-{
-    std::ifstream stream(filepath);
-
-    enum class ShaderType
-    {
-        NONE = -1, VERTEX = 0, FRAGMENT = 1
-    };
-
-    std::string line;
-    std::stringstream ss[2];
-    ShaderType type = ShaderType::NONE;
-    while (getline(stream, line))
-    {
-        if (line.find("#shader") != std::string::npos)
-        {
-            if (line.find("vertex") != std::string::npos)
-                type = ShaderType::VERTEX;
-            else if (line.find("fragment") != std::string::npos)
-                type = ShaderType::FRAGMENT;
-        }
-        else
-        {
-            ss[(int)type] << line << '\n';
-        }
-    }
-
-    return { ss[0].str(), ss[1].str() };
-}
-
-
-
-static unsigned int CompiledShader(unsigned int type, const std::string& source)
-{
-    unsigned int id = glCreateShader(type);
-    const char* src = source.c_str();// &source[0]
-    glShaderSource(id, 1, &src, nullptr);
-    glCompileShader(id);
-
-    //Error Handling
-    int result;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-    if (result == GL_FALSE)
-    {
-        int length;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        char* message = (char*)alloca(length * sizeof(char));//allocate on the stack
-        glGetShaderInfoLog(id, length, &length, message);
-        std::cout << "Failed to compiled " <<
-            (type == GL_VERTEX_SHADER ? "Vertex" : "Fragment") << " Shader!" << std::endl;
-        std::cout << message << std::endl;
-        glDeleteShader(id);
-
-        return 0;
-    }
-
-    return id;
-}
-
-// bind vertexShader & fragmentShader and link them into a single shader program
-// get a buffer return an ID 
-static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
-{
-    unsigned int program = glCreateProgram();
-    unsigned int vs = CompiledShader(GL_VERTEX_SHADER, vertexShader);
-    unsigned int fs = CompiledShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glValidateProgram(program);
-
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-
-    return program;
-}
 
 
 int main(void)
@@ -114,7 +39,7 @@ int main(void)
 
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(940, 680, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -140,12 +65,12 @@ int main(void)
     }
 
     cout << "opengl version:" << glGetString(GL_VERSION) << endl;
-
+    //    x      y   texturex  y 
     float positions[] = {
-        -1.2f, -1.2f, 0.0f, 0.0f, //0 bottom left
-        1.2f, -1.2f,1.0f,0.0f,  //1 bottom right
-        1.0f, 1.0f, 1.0f,1.0f, //2 top right
-        -1.2f, 1.2f,0.0f,1.0f //3
+        -1.0f, -1.0f,  0.0f, 0.0f, //0 bottom left
+         1.0f, -1.0f,  1.0f, 0.0f,  //1 bottom right
+         1.0f,  1.0f,  1.0f, 1.0f, //2 top right
+        -1.0f,  1.0f,  0.0f, 1.0f //3 top left
     };
 
     //use indices is to remove duplicate vertices
@@ -171,10 +96,19 @@ int main(void)
     //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo); //select buffer
     //glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
+    //                                X           Y             Z
+    //4:3                    left x right x  bottom y top y   z     z
+    //glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+    //1:1
+    glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.f, 1.f, -1.0f, 1.0f);
 
+    //in opengl projection x view x model 
     Shader shader("res/shaders/Basic.shader");
     shader.Bind();
-    //shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+    shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+    shader.SetUniformMat4f("u_MVP", proj);
+
+
     //ShaderProgramSources source = ParseShader("res/shaders/Basic.shader");
     //unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
     //glUseProgram(shader);
@@ -186,8 +120,25 @@ int main(void)
 
     Renderer renderer;
 
-    float r = 0.0f;
-    float increment = 0.05f;
+
+    // GL 3.0 + GLSL 130
+    const char* glsl_version = "#version 130";
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init(glsl_version);
+    ImGui::StyleColorsDark();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+
+    // Our state
+    bool show_demo_window = true;
+    bool show_another_window = false;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
 
 
     /* Loop until the user closes the window */
@@ -202,19 +153,46 @@ int main(void)
         //ib.Bind();
 
 
+
+
         renderer.Draw(va, ib, shader);
         //glDrawArrays(GL_TRIANGLES, 0, 3);
         //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-        if (r > 1)
+
+
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
-            increment = -0.05f;
-        }
-        else if (r < 0) {
-            increment = 0.05f;
+            static float f = 0.0f;
+            static int counter = 0;
+
+            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+            ImGui::Checkbox("Another Window", &show_another_window);
+
+            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+                counter++;
+            ImGui::SameLine();
+            ImGui::Text("counter = %d", counter);
+
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+            ImGui::End();
         }
 
-        r += increment;
+
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
@@ -223,6 +201,11 @@ int main(void)
         glfwPollEvents();
     }
 
+
+    // Cleanup
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
     //glDeleteProgram(shader);
 
     glfwTerminate();
