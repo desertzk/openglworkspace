@@ -24,8 +24,8 @@ void Renderer::Clear() const
 
 void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
 {
-    shader.Bind();
-    va.Bind();
-    ib.Bind();
+    shader.Bind();//this is gpu program
+    va.Bind();   //this is data vertex array contains vertex data including position vertex color normals
+    ib.Bind();   //this is data  indics to vertex buffer so we can choose which vertex to render
     GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
