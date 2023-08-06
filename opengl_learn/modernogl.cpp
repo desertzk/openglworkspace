@@ -96,7 +96,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 
 
 
-int main0408(void)
+int main(void)
 {
     GLFWwindow* window;
 
@@ -150,7 +150,7 @@ int main0408(void)
     //stride how much you need to go forward to get second vertex if position is 3dimension 12 byte texture coordinate is 2dimension 8 byte normal is 3dimension 12 byte    0,12,20
     //pointer offset of next attribute
 
-    ShaderProgramSources source = ParseShader("res/shaders/Basic.shader");
+    ShaderProgramSources source = ParseShader("res/shaders/Basic03.shader");
     unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
     glUseProgram(shader);
 

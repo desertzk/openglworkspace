@@ -21,14 +21,11 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-#include "tests/TestClearColor.h"
-#include "tests/TestTexture2D.h"
-
 using namespace std;
 
 
 
-int main30(void)
+int main23(void)
 {
     GLFWwindow* window;
 
@@ -68,7 +65,7 @@ int main30(void)
     }
 
     cout << "opengl version:" << glGetString(GL_VERSION) << endl;
-    //    x     y   texture x  y 
+    //    x      y   texturex  y 
     float positions[] = {
         -1.0f, -1.0f,  0.0f, 0.0f, //0 bottom left
          1.0f, -1.0f,  1.0f, 0.0f,  //1 bottom right
@@ -136,37 +133,63 @@ int main30(void)
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
-    test::Test* currentTest = nullptr;
-    test::TestMenu* testMenu = new test::TestMenu(currentTest);
-    currentTest = testMenu;
 
-    testMenu->RegisterTest<test::TestClearColor>("Clear Color");
-    testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
+    // Our state
+    bool show_demo_window = true;
+    bool show_another_window = false;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
-        GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+        /* Render here */
         renderer.Clear();
+        //glClear(GL_COLOR_BUFFER_BIT);
+
+
+        //va.Bind();
+        //ib.Bind();
+
+
+
+
+        renderer.Draw(va, ib, shader);
+        //glDrawArrays(GL_TRIANGLES, 0, 3);
+        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
+
 
         // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        if (currentTest)
+        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
-            currentTest->OnUpdate(0.0f);
-            currentTest->OnRender();
-            ImGui::Begin("Test");
-            if (currentTest != testMenu && ImGui::Button("<-")) // »ØÍË°´Å¥
-            {
-                delete currentTest;
-                currentTest = testMenu;
-            }
-            currentTest->OnImGuiRender();
+            static float f = 0.0f;
+            static int counter = 0;
+
+            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+            ImGui::Checkbox("Another Window", &show_another_window);
+
+            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+                counter++;
+            ImGui::SameLine();
+            ImGui::Text("counter = %d", counter);
+
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
             ImGui::End();
         }
+
+
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -177,15 +200,13 @@ int main30(void)
         /* Poll for and process events */
         glfwPollEvents();
     }
-    if (currentTest != testMenu)
-        delete testMenu;
-    delete currentTest;
-    
+
 
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
+    //glDeleteProgram(shader);
 
     glfwTerminate();
     return 0;

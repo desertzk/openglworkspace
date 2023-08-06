@@ -1,7 +1,8 @@
 #shader vertex
 #version 330 core
-
+//glVertexAttribPointer(0
 layout(location = 0) in vec4 position;
+//glVertexAttribPointer(1
 layout(location = 1) in vec2 texCoord;
 
 //output texture form vertex shader into fragment shader
