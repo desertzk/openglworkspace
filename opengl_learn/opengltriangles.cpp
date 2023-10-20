@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include<windows.h>
+//#include<windows.h>
 
 #include<iostream>
 #include <fstream>
@@ -98,7 +98,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 }
 
 
-int main02(void)
+int main(void)
 {
     GLFWwindow* window;
 
@@ -115,6 +115,7 @@ int main02(void)
     if (!window)
     {
         glfwTerminate();
+        std::cout << " glfwCreateWindow failed\n";
         return -1;
     }
 
