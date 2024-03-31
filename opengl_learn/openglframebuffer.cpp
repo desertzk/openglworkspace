@@ -1,7 +1,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include<Windows.h>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
+
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
@@ -20,6 +26,18 @@ void processInput(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 }
+
+
+
+
+void sleep_for_seconds(int seconds) {
+#ifdef _WIN32
+    Sleep(seconds * 1000); // Windows sleep function (milliseconds)
+#else
+    sleep(seconds); // POSIX sleep function (seconds)
+#endif
+}
+
 
 
 void renderToFramebuffer(GLuint framebuffer, GLuint textureColorBuffer) {
@@ -237,7 +255,7 @@ int main() {
         glBlitFramebuffer(0, 0, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
         glfwSwapBuffers(window);
-        Sleep(1000);
+        sleep_for_seconds(1);
         // Render to framebuffer2
         renderToFramebuffer2(framebuffer2, textureColorBuffer2);
         // Blit framebuffer2 to default framebuffer (screen)
@@ -246,7 +264,7 @@ int main() {
         glBlitFramebuffer(0, 0, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
         glfwSwapBuffers(window);
-        Sleep(1000);
+        sleep_for_seconds(1);
         glfwPollEvents();
     }
 
