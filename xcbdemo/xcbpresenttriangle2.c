@@ -3,6 +3,9 @@
 #include <png.h>
 #include <stdlib.h>
 
+//gcc -g -o xcbpresentimg2 xcbpresenttriangle2.c -lxcb-present -lxcb -lpng
+
+
 // void save_pixmap_to_png(xcb_connection_t* connection, xcb_pixmap_t pixmap, int width, int height, const char* filename) {
 //     xcb_get_image_reply_t* reply = xcb_get_image_reply(
 //         connection,
