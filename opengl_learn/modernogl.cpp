@@ -1,4 +1,4 @@
-#define GLFW_INCLUDE_VULKAN
+//#define GLFW_INCLUDE_VULKAN
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -96,7 +96,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 
 
 
-int main(void)
+int main01(void)
 {
     GLFWwindow* window;
 
@@ -114,10 +114,10 @@ int main(void)
         return -1;
     }
 
-    uint32_t extensionCount = 0;
-    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+    //uint32_t extensionCount = 0;
+    //vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
-    std::cout << extensionCount << " extensions supported\n";
+    //std::cout << extensionCount << " extensions supported\n";
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);

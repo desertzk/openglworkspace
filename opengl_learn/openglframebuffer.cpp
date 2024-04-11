@@ -167,7 +167,7 @@ void displayFramebufferContent(GLuint textureColorBuffer) {
     // e.g., draw a quad with appropriate texture coordinates
 }
 
-int main() {
+int main16() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

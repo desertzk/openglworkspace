@@ -125,7 +125,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/opengl_learn/glew-2.2.0\lib\Debug\x64;C:\VulkanSDK\1.3.224.1\Lib;$(SolutionDir)/opengl_learn/glfw-3.3.8\src\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\om\drivers\oglp\vs2019w\opengl_learn\glfw-3.3.8\src\Debug;D:\om\drivers\oglp\vs2019w\opengl_learn\glew-2.2.0\lib\Debug\x64;$(SolutionDir)/opengl_learn/glew-2.2.0\lib\Debug\x64;C:\VulkanSDK\1.3.216.0\Lib;$(SolutionDir)/opengl_learn/glfw-3.3.8\src\Debug</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32sd.lib;vulkan-1.lib;glfw3dll.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -152,6 +152,9 @@
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="index_buffer.cpp" />
     <ClCompile Include="modernogl.cpp" />
+    <ClCompile Include="openglframebuffer.cpp" />
+    <ClCompile Include="opengltriangles.cpp" />
+    <ClCompile Include="opengreadbufferpixel.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="source.cpp" />
@@ -188,6 +191,7 @@
     <ClInclude Include="vendor\imgui\imstb_textedit.h" />
     <ClInclude Include="vendor\imgui\imstb_truetype.h" />
     <ClInclude Include="vendor\stb\stb_image.h" />
+    <ClInclude Include="vendor\stb\stb_image_write.h" />
     <ClInclude Include="VertexArray.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexBufferLayout.h" />

@@ -147,9 +147,9 @@ int main(void)
     glBindVertexArray(m_VertexArray);
 
     float positions[6] = {
-        -0.5f, -0.5f,
-        0.0f, 0.5f,
-        0.5f, -0.5f
+        -1.0f, 1.0f,
+        1.0f, 1.0f,
+        -1.0f, -1.0f
     };
 
     unsigned int buffer_id;

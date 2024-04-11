@@ -98,7 +98,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 }
 
 
-int main(void)
+int main03(void)
 {
     GLFWwindow* window;
 
@@ -143,7 +143,7 @@ int main(void)
     glBindVertexArray(m_VertexArray);
 
     float positions[6] = {
-        -0.5f, -0.5f,
+        -1.0f, -1.0f,
         0.0f, 0.5f,
         0.5f, -0.5f
     };
