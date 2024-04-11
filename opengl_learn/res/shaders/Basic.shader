@@ -8,7 +8,7 @@ layout(location = 1) in vec2 texCoord;
 //output texture form vertex shader into fragment shader
 out vec2 v_TexCoord;
 // model view projection
-uniform mat4 u_MVP;
+uniform mat4 u_MVP; // we set this variable in the OpenGL code.
 
 void main()
 {
@@ -21,7 +21,7 @@ void main()
 
 layout(location = 0) out vec4 color;
 
-in vec2 v_TexCoord;
+in vec2 v_TexCoord;// the input variable from the vertex shader (same name and same type)
 
 //uniform vec4 u_Color;
 uniform sampler2D u_Texture;
