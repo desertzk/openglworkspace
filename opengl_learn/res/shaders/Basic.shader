@@ -21,7 +21,7 @@ void main()
 
 layout(location = 0) out vec4 color;
 
-in vec2 v_TexCoord;
+in vec2 v_TexCoord;// the input variable from the vertex shader (same name and same type)
 
 //uniform vec4 u_Color;
 uniform sampler2D u_Texture;
