@@ -18,14 +18,14 @@ GLuint textureColorBuffer2;
 GLuint renderbuffer1;
 GLuint renderbuffer2;
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
-}
-
-void processInput(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
+//void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+//    glViewport(0, 0, width, height);
+//}
+//
+//void processInput(GLFWwindow* window) {
+//    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+//        glfwSetWindowShouldClose(window, true);
+//}
 
 
 
@@ -198,7 +198,7 @@ int main16() {
         return -1;
     }
     glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    //glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
@@ -242,7 +242,7 @@ int main16() {
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
-        processInput(window);
+        //processInput(window);
 
         // Render to framebuffer1
         renderToFramebuffer(framebuffer1, textureColorBuffer1);
