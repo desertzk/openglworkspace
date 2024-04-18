@@ -9,6 +9,8 @@
 #include "shader_m.h"
 #include "shader_c.h"
 #include <filesystem>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 // utility function for checking shader compilation/linking errors.
@@ -266,7 +268,7 @@ unsigned int loadTexture(char const* path)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+//glTexStorage2D(GL_TEXTURE_2D, 1, format, width, height);
         stbi_image_free(data);
     }
     else
@@ -360,7 +362,27 @@ Shader screenShader("res/shaders/5.1.base.vs", "res/shaders/5.1.base.fs");
 
 
 
-ComputeShader computeShader("res/shaders/computeShader.cs");
+ComputeShader computeShader("res/shaders/carcomputer.shader");
+
+
+
+// texture size
+const unsigned int TEXTURE_WIDTH = 960, TEXTURE_HEIGHT = 540;
+
+unsigned int imgtexture;
+
+glGenTextures(1, &imgtexture);
+glActiveTexture(GL_TEXTURE0);
+glBindTexture(GL_TEXTURE_2D, imgtexture);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, 
+             GL_FLOAT, NULL);
+
+glBindImageTexture(1, imgtexture, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+
 
 
 
@@ -389,13 +411,31 @@ glDispatchCompute(120, 68, 1);
         glfwSwapBuffers(window);
         glfwPollEvents();
 
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+
         GLuint* ids = (GLuint*)glMapBufferRange(GL_SHADER_STORAGE_BUFFER,
             0, 2073600, GL_MAP_READ_BIT | GL_MAP_WRITE_BIT);
 
 
-    printf("ids :%d \n",ids[0]);
+    printf("ids :%x \n",ids[0]);
 
         glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+    //glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, imgtexture);
+
+        // Set the time uniform variable
+        screenShader.use();
+        //screenShader.setInt("texture1", carTexture);
+        glBindVertexArray(quadVAO);
+       
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+        std::this_thread::sleep_for(std::chrono::seconds(2));
 
     }
 

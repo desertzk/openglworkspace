@@ -27,6 +27,9 @@ UNITY_LOCATION(0) uniform  sampler2D FrameTex;
 layout(std430, binding = 0) buffer rgbBuffer {
 	rgbBuffer_type rgbBuffer_buf[];
 };
+
+layout(rgba32f, binding = 1) uniform image2D imgOutput;
+
 int u_xlati0;
 uint u_xlatu0;
 float u_xlat1;
@@ -45,6 +48,9 @@ layout(local_size_x = 8, local_size_y = 8, local_size_z = 1) in;
 void main()
 {
     u_xlatu0 = (uvec2(textureSize(FrameTex, 0)).x);
+
+    // rgbBuffer_buf[gl_GlobalInvocationID.x].value[0] = u_xlatu0;
+    // return;
     //uvec3	gl_GlobalInvocationID	global index of the current work item gl_GlobalInvocationID gives us the absolute coordinate of the current pixel.Remember that we only have one single invocation per work group as we set all local dimensions to 1.
     u_xlatu1.xy = gl_GlobalInvocationID.xy;
     u_xlatu1.z = uint(0u);
@@ -124,5 +130,13 @@ void main()
     u_xlati2.x = u_xlati2.z + u_xlati2.x;
     u_xlati2.x = int(bitfieldInsert(u_xlati2.x, int(u_xlatu2.y), 0 & 0x1F, 8));
     rgbBuffer_buf[u_xlati0].value[(0 >> 2)] = uint(u_xlati2.x);
+
+vec4 value = vec4(0.0, 0.0, 0.0, 1.0);
+    ivec2 texelCoord = ivec2(gl_GlobalInvocationID.xy);
+    
+    value.x = u_xlat2.x;
+    value.y = u_xlat2.y;
+    imageStore(imgOutput, texelCoord, value);
+
     return;
 }
