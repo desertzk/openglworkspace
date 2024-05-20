@@ -9,7 +9,7 @@ include_directories(./opengl_learn/vendor/)
 #add_executable(opengl_learn opengl_learn/openglframebuffer.cpp)
 add_executable(opengl_learn
     glad/src/glad.c
-    opengl_learn/opengldispatchcomputer1.cpp
+    opengl_learn/lightlearn.cpp
 )
 #opengl_learn/opengldispatchcomputer1.cpp
 #add_executable(opengl_learn opengl_learn/opengreadbufferpixel.cpp)

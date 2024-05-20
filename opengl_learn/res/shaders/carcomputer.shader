@@ -56,6 +56,12 @@ void main()
     u_xlatu1.z = uint(0u);
     u_xlatu1.w = uint(0u);
     u_xlat2.xyz = texelFetch(FrameTex, ivec2(u_xlatu1.xy), int(u_xlatu1.w)).xyz;
+
+//zd
+vec4 valueorigin = vec4(0.0, 0.0, 0.0, 1.0);
+valueorigin.xyz = u_xlat2.xyz;
+
+
     u_xlati0 = int(gl_GlobalInvocationID.y) * int(u_xlatu0) + int(gl_GlobalInvocationID.x);
     u_xlatb1.xyz = greaterThanEqual(vec4(0.0, 0.0, 0.0, 0.0), u_xlat2.xyzx).xyz;
     if(u_xlatb1.x){
@@ -136,7 +142,8 @@ vec4 value = vec4(0.0, 0.0, 0.0, 1.0);
     
     value.x = u_xlat2.x;
     value.y = u_xlat2.y;
-    imageStore(imgOutput, texelCoord, value);
+    value.z = u_xlat2.z;
+    imageStore(imgOutput, texelCoord, valueorigin+vec4(0.1, 0.2, 0.0, 1.0));
 
     return;
 }
