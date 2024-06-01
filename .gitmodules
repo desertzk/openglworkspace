@@ -1,3 +1,6 @@
 [submodule "opengl_learn/opengl_learn/vendor/stb"]
 	path = opengl_learn/opengl_learn/vendor/stb
 	url = https://github.com/nothings/stb.git
+[submodule "linux/glfw"]
+	path = linux/glfw
+	url = https://github.com/glfw/glfw.git
