@@ -209,8 +209,8 @@ int main() {
 
 
 // Change the current working directory
-std::filesystem::current_path("/root/umd/openglworkspace/opengl_learn/");
-unsigned int carTexture = loadTexture("resources/textures/cartex.png");
+std::filesystem::current_path("/home/amd/umd/openglworkspace/opengl_learn/");
+unsigned int carTexture = loadTexture("resources/textures/metal.png");
 Shader screenShader("res/shaders/5.1.base.vs", "res/shaders/5.1.base.fs");
     screenShader.use();
     //screenShader.setInt("texture1", carTexture);

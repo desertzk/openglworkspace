@@ -76,7 +76,7 @@ int main()
 
 
 // Change the current working directory
-std::filesystem::current_path("/root/umd/openglworkspace/opengl_learn/");
+std::filesystem::current_path("/home/amd/umd/openglworkspace/opengl_learn/");
     // build and compile our shader zprogram
     // ------------------------------------
     Shader lightingShader("res/shaders/1.colors.vs", "res/shaders/1.colors.fs");

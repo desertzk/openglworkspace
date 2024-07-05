@@ -6,10 +6,10 @@ include_directories(./linux/glfw/include)
 include_directories(./opengl_learn/vendor/stb)
 include_directories(./opengl_learn/vendor/)
 #add_executable(opengl_learn opengl_learn/opengltriangles.cpp)
-#add_executable(opengl_learn opengl_learn/openglframebuffer.cpp)
+#add_executable(opengl_learn opengl_learn/openglframebuffer.cpp)opengl_learn/lightlearn.cpp
 add_executable(opengl_learn
     glad/src/glad.c
-    opengl_learn/lightlearn.cpp
+    opengl_learn/opengltriangles.cpp
 )
 #opengl_learn/opengldispatchcomputer1.cpp
 #add_executable(opengl_learn opengl_learn/opengreadbufferpixel.cpp)
@@ -29,4 +29,5 @@ target_link_libraries(opengl_learn ~/umd/openglworkspace/linux/glfw/build/src/li
 
 #target_link_libraries(opengl_learn GLEW)
 target_link_libraries(opengl_learn /usr/local/lib/x86_64-linux-gnu/libGL.so)
+#target_link_libraries(opengl_learn /usr/local/lib/x86_64-linux-gnu/libGL.so)
 # target_link_libraries(opengl_learn ${OPENGL_LIBRARIES})

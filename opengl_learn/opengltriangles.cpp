@@ -1,6 +1,6 @@
 //#define GLFW_INCLUDE_VULKAN
 #define GLEW_STATIC
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 //#include<windows.h>
@@ -98,7 +98,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 }
 
 
-int main03(void)
+int main(void)
 {
     GLFWwindow* window;
 
@@ -128,12 +128,12 @@ int main03(void)
     glfwMakeContextCurrent(window);
 
 
-    GLenum err = glewInit();
-    if (GLEW_OK != err)
+    // glad: load all OpenGL function pointers
+    // ---------------------------------------
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        /* Problem: glewInit failed, something is seriously wrong. */
-        fprintf(stderr, "glewInit Error: %s\n", glewGetErrorString(err));
-
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return -1;
     }
 
     cout << "opengl version:" << glGetString(GL_VERSION) << endl;
