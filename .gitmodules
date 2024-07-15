@@ -4,3 +4,6 @@
 [submodule "opengl_learn/vendor/stb"]
 	path = opengl_learn/vendor/stb
 	url = https://github.com/nothings/stb.git
+[submodule "opengl_learn/vendor/assimp"]
+	path = opengl_learn/vendor/assimp
+	url = https://github.com/assimp/assimp.git
