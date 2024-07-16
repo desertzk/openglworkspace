@@ -2,7 +2,7 @@
 
 #include "stb_image.h"
 
-Texture::Texture(const std::string& path)
+TextureM::TextureM(const std::string& path)
 	: m_RendererID(0), m_FilePath(path), m_LocalBuffer(nullptr), 
 	m_Width(0), m_Height(0), m_BPP(0)
 {
@@ -24,18 +24,18 @@ Texture::Texture(const std::string& path)
 		stbi_image_free(m_LocalBuffer);
 }
 
-Texture::~Texture()
+TextureM::~TextureM()
 {
 	GLCall(glDeleteTextures(1, &m_RendererID));
 }
 
-void Texture::Bind(unsigned int slot) const
+void TextureM::Bind(unsigned int slot) const
 {
 	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 }
 
-void Texture::Unbind() const
+void TextureM::Unbind() const
 {
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 }

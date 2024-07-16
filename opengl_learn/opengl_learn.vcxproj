@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../glad\include;C:\VulkanSDK\1.3.224.1\Include;../glfw-3.3.8\include;../glew-2.2.0\include;./vendor/stb;./vendor/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../glad\include;C:\VulkanSDK\1.3.224.1\Include;../glfw-3.3.8\include;../glew-2.2.0\include;./vendor/stb;./vendor/;.\vendor\x64-windows\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,12 +147,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\glad\src\glad.c" />
-    <ClCompile Include="Application.cpp" />
     <ClCompile Include="Application15.cpp" />
     <ClCompile Include="Application23.cpp" />
     <ClCompile Include="glframebufferlearn.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="index_buffer.cpp" />
+    <ClCompile Include="model_loading.cpp" />
     <ClCompile Include="modernogl.cpp" />
     <ClCompile Include="opengldispatchcomputer.cpp" />
     <ClCompile Include="openglframebuffer.cpp" />
@@ -162,9 +162,6 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="tests\Test.cpp" />
-    <ClCompile Include="tests\TestClearColor.cpp" />
-    <ClCompile Include="tests\TestTexture2D.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
     <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
@@ -183,8 +180,6 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="tests\Test.h" />
-    <ClInclude Include="tests\TestClearColor.h" />
-    <ClInclude Include="tests\TestTexture2D.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="vendor\imgui\imconfig.h" />
     <ClInclude Include="vendor\imgui\imgui.h" />

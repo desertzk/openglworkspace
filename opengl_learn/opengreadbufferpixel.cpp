@@ -100,7 +100,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 }
 
 
-int main(void)
+int main0715(void)
 {
     GLFWwindow* window;
 

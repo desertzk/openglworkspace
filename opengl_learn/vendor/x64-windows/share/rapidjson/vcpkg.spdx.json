@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/rapidjson-x64-windows-2023-07-17#1-4f91304d-a575-4e14-8f00-f81e0636ac52",
+  "name": "rapidjson:x64-windows@2023-07-17#1 bde4023e955ce3d47aa8987c828872f6b9c42a0f104bbc2d5f672021b0eb8d22",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-2024-07-10-d2dfc73769081bdd9b782d08d27794780b7a99b9"
+    ],
+    "created": "2024-07-16T12:33:28Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "rapidjson",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "2023-07-17#1",
+      "downloadLocation": "git+https://github.com/Microsoft/vcpkg#ports/rapidjson",
+      "homepage": "http://rapidjson.org/",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "A fast JSON parser/generator for C++ with both SAX/DOM style API <http://rapidjson.org/>",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "rapidjson:x64-windows",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "bde4023e955ce3d47aa8987c828872f6b9c42a0f104bbc2d5f672021b0eb8d22",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "Tencent/rapidjson",
+      "downloadLocation": "git+https://github.com/Tencent/rapidjson@a95e013b97ca6523f32da23f5095fcc9dd6067e5",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "19bf9a579df70cbeaf60c7ccf25c92c327bffe95b0df14f27f2132134d5bb214e98a45e021eb287c4790e301f84bb095e0bdb3c97f65a37fbeb254970d97c005"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": "./D:/cppworkspace/vcpkg/ports/rapidjson/portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "e51514972f8091c5ca3652d36dd7085bca8cd728d7158437743bb161fdb64afe"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./D:/cppworkspace/vcpkg/ports/rapidjson/vcpkg.json",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "e003a19faf326d9e5ee55544c904e38b0483d0d72420ba6b6129927e7c72bc61"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}

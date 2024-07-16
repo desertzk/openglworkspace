@@ -113,7 +113,7 @@ int main23(void)
     //unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
     //glUseProgram(shader);
 
-    Texture texture("res/textures/82783102_p0.png");
+    TextureM texture("res/textures/82783102_p0.png");
     texture.Bind();
     shader.SetUniform1i("u_Texture",0);
 

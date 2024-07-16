@@ -77,11 +77,11 @@ int main()
 
     // build and compile shaders
     // -------------------------
-    Shader ourShader("1.model_loading.vs", "1.model_loading.fs");
+    Shader ourShader("res/shaders/1.model_loading.vs", "res/shaders/1.model_loading.fs");
 
     // load models
     // -----------
-    Model ourModel(FileSystem::getPath("resources/objects/backpack/backpack.obj"));
+    Model ourModel("resources/objects/backpack/backpack.obj");
 
 
     // draw in wireframe

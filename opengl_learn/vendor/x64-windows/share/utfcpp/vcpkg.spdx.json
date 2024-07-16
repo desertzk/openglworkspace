@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/utfcpp-x64-windows-4.0.5-d61fa76c-fc79-405b-9933-1d976acc8eff",
+  "name": "utfcpp:x64-windows@4.0.5 a565ce760a609fdb77e108c44451245f37f9670511b7ee0b54db7e475f2bc5a3",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-2024-07-10-d2dfc73769081bdd9b782d08d27794780b7a99b9"
+    ],
+    "created": "2024-07-16T12:33:33Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "utfcpp",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "4.0.5",
+      "downloadLocation": "git+https://github.com/Microsoft/vcpkg#ports/utfcpp",
+      "homepage": "https://github.com/nemtrif/utfcpp",
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "UTF-8 with C++ in a Portable Way",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "utfcpp:x64-windows",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "a565ce760a609fdb77e108c44451245f37f9670511b7ee0b54db7e475f2bc5a3",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "nemtrif/utfcpp",
+      "downloadLocation": "git+https://github.com/nemtrif/utfcpp@v4.0.5",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "49ca33bfb2ee44515f555184b51191f7b706a228fb84ddc62e1e6b59c7d69a5ff836f38694daad0012a0f651b6199451974fe44ebe80081df00cf8c2759e3249"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": "./D:/cppworkspace/vcpkg/ports/utfcpp/portfile.cmake",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "70b09920e3d54803e472b48fe1f320124f0fd84c68934014abec07fa384d7d15"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": "./D:/cppworkspace/vcpkg/ports/utfcpp/vcpkg.json",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "7df8364e8fea6a75d70d987e4239d9f84f9a7f84c9cb58ab34d10e690f900a46"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}
