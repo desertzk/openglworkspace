@@ -1,4 +1,4 @@
-#define GLFW_INCLUDE_VULKAN
+//#define GLFW_INCLUDE_VULKAN
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -25,7 +25,7 @@ int mainlegacy(void)
     }
 
     uint32_t extensionCount = 0;
-    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+    //vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
     std::cout << extensionCount << " extensions supported\n";
 
