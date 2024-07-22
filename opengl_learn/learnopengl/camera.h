@@ -60,11 +60,21 @@ public:
     }
 
     // returns the view matrix calculated using Euler Angles and the LookAt Matrix
+    //Position + Front means camera Position + camera direction
     glm::mat4 GetViewMatrix()
     {
         return glm::lookAt(Position, Position + Front, Up);
     }
-
+    /*
+    This ensures that however we move, the camera keeps looking at the target direction. 
+    Let's play a bit with these variables by updating the cameraPos vector when we press some keys.
+    glm::mat4 glm::lookAt(
+    glm::vec3 eye,
+    glm::vec3 center,
+    glm::vec3 up
+);
+    glm::lookat eye= camera position   center = target posion or direction camera should look at
+    */
     // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
@@ -113,6 +123,7 @@ public:
 
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles
+    //radians=degrees*180/PI
     void updateCameraVectors()
     {
         // calculate the new Front vector
